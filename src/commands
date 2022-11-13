@@ -1,0 +1,55 @@
+CREATE TABLE admin (
+  username varchar(40) PRIMARY KEY,
+  password varchar(20) DEFAULT NULL
+);
+
+insert into admin values("admin","admin");
+
+
+CREATE TABLE tender (
+  tid int AUTO_INCREMENT NOT NULL,
+  tname varchar(40) DEFAULT NULL,
+  ttype varchar(20) DEFAULT NULL,
+  tprice int(11) DEFAULT NULL,
+  tdesc varchar(300) DEFAULT NULL,
+  tstatus varchar(20) DEFAULT NULL,
+  PRIMARY KEY (tid)
+);
+
+CREATE TABLE vendor (
+  vid varchar(15) NOT NULL,
+  vpassword varchar(20) NOT NULL,
+  vname varchar(30) DEFAULT NULL,
+  vmob varchar(12) DEFAULT NULL,
+  vemail varchar(40) DEFAULT NULL,
+  company varchar(15) DEFAULT NULL,
+  address varchar(100) DEFAULT NULL,
+  PRIMARY KEY (vid)
+);
+
+
+CREATE TABLE bidder (
+  bid int UNIQUE AUTO_INCREMENT,
+  vid varchar(15) NOT NULL,
+  tid int NOT NULL,
+  bidamount int(11) DEFAULT NULL,
+  status varchar(10) DEFAULT NULL,
+  biddate date DEFAULT NULL,
+  PRIMARY KEY (vid,tid),
+  FOREIGN KEY (vid) references vendor(vid),
+  FOREIGN KEY (tid) references tender(tid)
+);
+
+
+===========================================================
+CREATE TABLE tenderstatus (
+  tid varchar(15) PRIMARY KEY,
+  bid varchar(15) DEFAULT NULL,
+  status varchar(15) NOT NULL,
+  vid varchar(15) DEFAULT NULL,
+  FOREIGN KEY (bid) references bidder(bid),
+  FOREIGN KEY (vid) references vendor(vid),
+  FOREIGN KEY (tid) references tender(tid)
+);
+
+
